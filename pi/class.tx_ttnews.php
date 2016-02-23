@@ -3804,10 +3804,17 @@ class tx_ttnews extends tslib_pibase {
 		// read template-file and fill and substitute the Global Markers
 		$templateflex_file = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'template_file', 's_template');
 		if ($templateflex_file) {
-			if (false === strpos($templateflex_file, '/')) {
-				$templateflex_file = 'uploads/tx_ttnews/' . $templateflex_file;
+			if(\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($templateflex_file, 'file:')) {
+				// load FAL file object
+				$fileObject = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->getFileObject( (int) (substr($templateflex_file, 5)));
+				$this->templateCode = is_object($fileObject) ? $fileObject->getContents() : '';
 			}
-			$this->templateCode = $this->cObj->fileResource($templateflex_file);
+			else {
+				if (false === strpos($templateflex_file, '/')) {
+					$templateflex_file = 'uploads/tx_ttnews/' . $templateflex_file;
+				}
+				$this->templateCode = $this->cObj->fileResource($templateflex_file);
+			}
 		} else {
 			$this->templateCode = $this->cObj->fileResource($this->conf['templateFile']);
 		}
