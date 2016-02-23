@@ -57,8 +57,12 @@ class tx_ttnews_templateeval {
  * @return	string		Evaluated value
  */
 	function deevaluateFieldValue($params) {
-		if (trim($params['value']) != '' && false === strpos($params['value'], '/')) {
-			$params['value'] = 'uploads/tt_news/' . $params['value'];
+		
+		if (trim($params['value']) != '' && 
+				false === strpos($params['value'], '/') &&
+				!\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($params['value'], 'file:')
+		) {
+				$params['value'] = 'uploads/tt_news/' . $params['value'];
 		}
 		return $params['value'];
 	}
