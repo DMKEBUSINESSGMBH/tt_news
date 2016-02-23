@@ -1,0 +1,10 @@
+{
+	"name": "dmk/tt_news",
+	"description": "Fork of tt_news for TYPO3 6.2",
+	"type": "typo3-cms-extension",
+	"version": "3.6.4",,
+	"replace" : {
+		"typo3-ter/tt_news" : "*"
+	}
+}
+
