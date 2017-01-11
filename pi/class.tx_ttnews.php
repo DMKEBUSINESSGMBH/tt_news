@@ -44,6 +44,8 @@ require_once (t3lib_extMgm::extPath('tt_news') . 'lib/class.tx_ttnews_catmenu.ph
 require_once (t3lib_extMgm::extPath('tt_news') . 'lib/class.tx_ttnews_helpers.php');
 require_once (t3lib_extMgm::extPath('tt_news') . 'lib/class.tx_ttnews_cache.php');
 
+tx_rnbase::load('Tx_Rnbase_Utility_Strings');
+
 /**
  * Plugin 'news' for the 'tt_news' extension.
  *
@@ -3804,7 +3806,7 @@ class tx_ttnews extends tslib_pibase {
 		// read template-file and fill and substitute the Global Markers
 		$templateflex_file = $this->pi_getFFvalue($this->cObj->data['pi_flexform'], 'template_file', 's_template');
 		if ($templateflex_file) {
-			if(\TYPO3\CMS\Core\Utility\GeneralUtility::isFirstPartOfStr($templateflex_file, 'file:')) {
+			if(Tx_Rnbase_Utility_Strings::isFirstPartOfStr($templateflex_file, 'file:')) {
 				// load FAL file object
 				$fileObject = \TYPO3\CMS\Core\Resource\ResourceFactory::getInstance()->getFileObject( (int) (substr($templateflex_file, 5)));
 				$this->templateCode = is_object($fileObject) ? $fileObject->getContents() : '';
