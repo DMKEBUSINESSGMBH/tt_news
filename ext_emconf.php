@@ -21,7 +21,6 @@ $EM_CONF[$_EXTKEY] = array(
 	'priority' => '',
 	'loadOrder' => '',
 	'TYPO3_version' => '4.5.0-6.2.99',
-	'PHP_version' => '5.2.0-5.5.99',
 	'module' => 'mod1',
 	'state' => 'beta',
 	'uploadfolder' => 1,
