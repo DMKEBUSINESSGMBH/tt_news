@@ -72,7 +72,7 @@ class tx_ttnews_div {
 	 * @param	[type]		$withSub: ...
 	 * @return	[type]		...
 	 */
-	function getBeUserCatMounts($withSub=true) {
+	public static function getBeUserCatMounts($withSub=true) {
 		global $BE_USER;
 
 		$cmounts = array();
@@ -104,7 +104,7 @@ class tx_ttnews_div {
 	 * @param	integer		$cc: counter to detect recursion in nested categories
 	 * @return	string		extended $catlist
 	 */
-	function getSubCategories($catlist,$addWhere='', $cc = 0) {
+	public static function getSubCategories($catlist,$addWhere='', $cc = 0) {
 
 		if (!$catlist) {
 			t3lib_div::devLog('EMPTY $catlist ('.__CLASS__.'::'.__FUNCTION__.')', 'tt_news', 3, array());
@@ -134,7 +134,7 @@ class tx_ttnews_div {
 
 
 
-	function getNewsCountForSubcategory(&$result, $cat, $news_clause, $catclause) {
+	public static function getNewsCountForSubcategory(&$result, $cat, $news_clause, $catclause) {
 		// count news in current category
 
 		$select_fields = 'COUNT(DISTINCT tt_news.uid)';
@@ -193,7 +193,7 @@ class tx_ttnews_div {
 	 *
 	 * @return	[type]		...
 	 */
-	function getAllowedTreeIDs() {
+	public static function getAllowedTreeIDs() {
 
 		$catlistWhere = tx_ttnews_div::getCatlistWhere();
 		$treeIDs = array();
@@ -210,7 +210,7 @@ class tx_ttnews_div {
 	 *
 	 * @return	[type]		...
 	 */
-	function getCatlistWhere() {
+	public static function getCatlistWhere() {
 		$catlistWhere = '';
 		if (!$GLOBALS['BE_USER']->isAdmin()) {
 			// get include/exclude items
@@ -234,7 +234,7 @@ class tx_ttnews_div {
 	 *
 	 * @return	[type]		...
 	 */
-	function getIncludeCatArray() {
+	public static function getIncludeCatArray() {
 		$includeList = $GLOBALS['BE_USER']->getTSConfigVal('tt_newsPerms.tt_news_cat.includeList');
 		$catmounts = tx_ttnews_div::getBeUserCatMounts();
 		if ($catmounts) {
@@ -243,13 +243,4 @@ class tx_ttnews_div {
 
 		return t3lib_div::intExplode(',',$includeList, 1);
 	}
-
-
-
-
 }
-
-if (defined('TYPO3_MODE') && $TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/tt_news/lib/class.tx_ttnews_div.php']) {
-	include_once($TYPO3_CONF_VARS[TYPO3_MODE]['XCLASS']['ext/tt_news/lib/class.tx_ttnews_div.php']);
-}
-?>
