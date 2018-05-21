@@ -159,7 +159,7 @@ class tx_ttnews_categorytree extends t3lib_treeview {
 					if ($this->addSelfId) {
 						$this->ids[] = $uid;
 					}
-					$this->getTree($uid, 999, '', $rootRec['_SUBCSSCLASS']);
+					$this->getTree($uid, 999, '', '', $rootRec['_SUBCSSCLASS']);
 				}
 				// Add tree:
 				$treeArr = array_merge($treeArr, $this->tree);
@@ -231,7 +231,8 @@ class tx_ttnews_categorytree extends t3lib_treeview {
 	 * @param	[type]		$subCSSclass: ...
 	 * @return	integer		The count of items on the level
 	 */
-	function getTree($uid, $depth = 999, $blankLineCode = '', $subCSSclass = '') {
+	public function getTree($uid, $depth = 999, $depthData = '', $blankLineCode = '', $subCSSclass = '') {
+//           function getTree($uid, $depth = 999, $blankLineCode = '', $subCSSclass = '') {
 
 		//		echo $this->tmpC++."\n";
 
@@ -284,7 +285,7 @@ class tx_ttnews_categorytree extends t3lib_treeview {
 
 			// Make a recursive call to the next level
 			if ($depth > 1 && $this->expandNext($newID)) {
-				$nextCount = $this->getTree($newID, $depth - 1, $blankLineCode . ',' . $LN, $row['_SUBCSSCLASS']);
+				$nextCount = $this->getTree($newID, $depth - 1, '', $blankLineCode . ',' . $LN, $row['_SUBCSSCLASS']);
 				if (count($this->buffer_idH)) {
 					$idH[$row['uid']]['subrow'] = $this->buffer_idH;
 				}
@@ -297,7 +298,7 @@ class tx_ttnews_categorytree extends t3lib_treeview {
 			// Set HTML-icons, if any:
 			if ($this->makeHTML) {
 				$HTML = '';
-				$HTML .= $this->PMicon($row, $a, $c, $nextCount, $exp);
+				$HTML .= $depthData . $this->PMicon($row, $a, $c, $nextCount, $exp);
 				$HTML .= $this->wrapStop($this->getIcon($row), $row);
 			}
 
